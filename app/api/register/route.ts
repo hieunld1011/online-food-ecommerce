@@ -1,0 +1,33 @@
+import { NextResponse } from 'next/server';
+import prisma from '@/app/utils/prismadb.utils';
+import bcrypt from 'bcrypt';
+
+export const POST = async (req: Request) => {
+  try {
+    const body = await req.json();
+
+    const { name, phone, password, email } = body;
+
+    if (!name || !phone || !password || !email) {
+      return new NextResponse('Missing info, please fill all the input', {
+        status: 401,
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const user = await prisma.user.create({
+      data: {
+        email: email,
+        emailVerified: email,
+        phone: phone,
+        password: hashedPassword,
+        name: name,
+      },
+    });
+
+    return NextResponse.json(user);
+  } catch (error) {
+    return new NextResponse('Internal Error: ' + error, { status: 500 });
+  }
+};

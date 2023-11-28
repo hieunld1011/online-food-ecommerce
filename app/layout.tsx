@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import './globals.css';
+import './globals.scss';
+import 'react-toastify/dist/ReactToastify.css';
+import StyledComponentsRegistry from './utils/AntdRegistry';
+import { ToastContainer } from 'react-toastify';
+
+import AuthContext from './context/AuthContext';
+import Providers from './components/Providers';
 
 const roboto = Roboto({ weight: '400', subsets: ['latin'] });
 
@@ -16,7 +22,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <AuthContext>
+          <Providers>
+            <StyledComponentsRegistry>
+              {children}
+              <ToastContainer autoClose={3000} />
+            </StyledComponentsRegistry>
+          </Providers>
+        </AuthContext>
+      </body>
     </html>
   );
 }

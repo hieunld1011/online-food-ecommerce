@@ -1,0 +1,146 @@
+[
+  {
+    "productName": "Double Cheeseburger",
+    "category": "burger",
+    "price": 12,
+    "ratings": 4.5,
+    "description": "Double favor with extra cheese.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712667/food_ecommerce/c0eqgwjarlrfj1n6ec7i.png"]
+  },
+  {
+    "productName": "Hamburger Burger",
+    "category": "burger",
+    "price": 12,
+    "ratings": 4.6,
+    "description": "Hamburger in Australia styles.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712666/food_ecommerce/o9enikmmpbariv7zpk6w.png"]
+  },
+  {
+    "productName": "Vegetables Burger",
+    "category": "burger",
+    "price": 17,
+    "ratings": 4.7,
+    "description": "Burger with much more salad.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712666/food_ecommerce/cvzr4vdsgviqmrtobwtt.png"]
+  },
+  {
+    "productName": "Quattro Formaggi",
+    "category": "burger",
+    "price": 19,
+    "ratings": 4.7,
+    "description": "An Italy Special Burger.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712665/food_ecommerce/q4djx4o3dn2tuxrycvzo.png"]
+  },
+  {
+    "productName": "Smoked Salmon",
+    "category": "burger",
+    "price": 10,
+    "ratings": 4.3,
+    "description": "Burger go with a fillet of smoked salmon.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712666/food_ecommerce/flxjhtsatnnh7mfzitpe.png"]
+  },
+  {
+    "productName": "Spacial Barger",
+    "category": "burger",
+    "price": 21,
+    "ratings": 4.8,
+    "description": "The BARGER, special one with spicy and strong taste.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712665/food_ecommerce/w4n164fy59bg8ns2qjdk.png"]
+  },
+  {
+    "productName": "Bacon Cheeseburger",
+    "category": "burger",
+    "price": 15,
+    "ratings": 4.6,
+    "description": "Cheeseburger but with the BACON!",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712106/food_ecommerce/z6aelskau3ygqdid1oay.png"]
+  },
+  {
+    "productName": "Beef Tuna Burger",
+    "category": "burger",
+    "price": 18,
+    "ratings": 4.1,
+    "description": "Tuna Burger for the fish aholic.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/nhebm3c6yqsxyibmhimi.png"]
+  },
+  {
+    "productName": "Classic Burger",
+    "category": "burger",
+    "price": 11,
+    "ratings": 4.4,
+    "description": "A classic burger with cheese, salad and beef",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/kqvgrftdoa4w2oyi1gf9"]
+  },
+  {
+    "productName": "Double Bacon Burger",
+    "category": "burger",
+    "price": 19,
+    "ratings": 4.5,
+    "description": "Extra bacon, extra meattt!",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/wxg9g6agihalnno1f72m"]
+  },
+  {
+    "productName": "Showroom Burger",
+    "category": "burger",
+    "price": 24,
+    "ratings": 4.2,
+    "description": "Stack beef layers look like a showroom",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/xcbez9kvelnkncu2fviy"]
+  },
+  {
+    "productName": "Chicken Club",
+    "category": "burger",
+    "price": 19,
+    "ratings": 4.3,
+    "description": "Chicken chicken, Winner Chicken!!.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699712666/food_ecommerce/flxjhtsatnnh7mfzitpe.png"]
+  },
+  {
+    "productName": "Fanta Orange",
+    "category": "beverage",
+    "price": 5.49,
+    "ratings": 4.3,
+    "description": "Fanta orange",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/g98cbgkczimjvvmxker1"]   
+  },
+  {
+    "productName": "Cocacola",
+    "category": "beverage",
+    "price": 5,
+    "ratings": 4.8,
+    "description": "Coke for everyone.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/dbsefx6mgcryldfyigkj"]
+  },
+  {
+    "productName": "Premium Orange Juice",
+    "category": "beverage",
+    "price": 7.29,
+    "ratings": 4.8,
+    "description": "Fresh orange juice with the original orange from Australia.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/fybvg8lwyq7nh64xm1x0"]
+  },
+  {
+    "productName": "Mango Sprite",
+    "category": "beverage",
+    "price": 5.29,
+    "ratings": 4.6,
+    "description": "Cocktail mix betwwen mango and sprite.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/z8qmmyn8gg6jilfyyzli"]
+  },
+  {
+    "productName": "Iced Tea",
+    "category": "beverage",
+    "price": 4.79,
+    "ratings": 4.6,
+    "description": "Cool fresh tea.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/yl128mfdxnslfvn5fy1l"]
+  },
+  {
+    "productName": "Banana Juice",
+    "category": "beverage",
+    "price": 4.79,
+    "ratings": 4.7,
+    "description": "Banana juice is made from banana.",
+    "picture": ["https://res.cloudinary.com/darnjuxfv/image/upload/v1699714945/food_ecommerce/umhce3mpgi3cc0neoqcn"]
+  }
+]

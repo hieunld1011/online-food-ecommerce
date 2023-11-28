@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    email         String   @unique
+    name          String?
+    emailVerified String?
+    phone         String?
+    image         String?
+    password      String?
+    role          String   @default("user")
+    created_at    DateTime @default(now())
+
+    orders   Order[]
+    reviews  Review[]
+    accounts Account[]
+}
+
+model Account {
+    id                String  @id @default(auto()) @map("_id") @db.ObjectId
+    userId            String  @db.ObjectId
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.String
+    access_token      String? @db.String
+    expires_at        Int?
+    scope             String?
+    token_type        String?
+    id_token          String? @db.String
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Product {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    productName String
+    category    String
+    price       Float
+    description String
+    ratings     Float?
+    created_at  DateTime @default(now())
+    updated_at  DateTime @default(now())
+    picture     String[]
+
+    reviews  Review[]
+    orders   Order[]  @relation(fields: [orderIds], references: [id])
+    orderIds String[] @db.ObjectId
+}
+
+model Review {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    comment    String
+    rating     Float
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now())
+
+    product    Product? @relation(fields: [product_id], references: [id])
+    product_id String?  @db.ObjectId
+    user       User?    @relation(fields: [user_id], references: [id])
+    user_id    String?  @db.ObjectId
+}
+
+model Order {
+    id            String    @id @default(auto()) @map("_id") @db.ObjectId
+    status        String?   @default("processing")
+    quantity      Int
+    address       String
+    notes         String?
+    total         Float
+    receivedPhone String
+    deliveredTime DateTime?
+    created_at    DateTime  @default(now())
+    updated_at    DateTime  @default(now())
+
+    userOrder      User      @relation(fields: [userOrderId], references: [id])
+    userOrderId    String    @db.ObjectId
+    productOrder   Product[] @relation(fields: [productOrderId], references: [id])
+    productOrderId String[]  @db.ObjectId
+}

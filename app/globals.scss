@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.clip-parallelogram {
+  clip-path: polygon(10% 0%, 100% 0%, 87% 100%, 0% 101%);
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.material-bubble {
+  background-color: #f8c600;
+  color: black;
+  border: 3px solid #f8c600;
+  overflow: hidden;
+  box-shadow: none;
+
+  &:hover {
+    color: white;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition:
+      opacity 0.3s,
+      border 0.3s;
+  }
+
+  &:hover::before {
+    opacity: 0;
+    background-color: transparent;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    transform: translate(-10px, -70px) scale(0.1);
+    opacity: 0;
+    z-index: -1;
+    transition:
+      transform 0.3s,
+      opacity 0.3s,
+      background-color 0.3s;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    transform-origin: 100px 100px;
+    transform: scale(1) translate(-10px, -70px);
+  }
+}
+
+.ant-btn-primary {
+  background-color: #0056b3 !important;
+  box-shadow: none;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}

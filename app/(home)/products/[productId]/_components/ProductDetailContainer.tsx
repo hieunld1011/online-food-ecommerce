@@ -32,7 +32,20 @@ const productDetailInit = {
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
   picture: [],
-  reviews: [],
+  reviews: [
+    {
+      id: '',
+      user: {
+        name: '',
+      },
+      comment: '',
+      rating: 0,
+      created_at: new Date(Date.now()),
+      updated_at: new Date(Date.now()),
+      product_id: '',
+      user_id: '',
+    },
+  ],
   orderIds: [],
 };
 
@@ -82,6 +95,11 @@ const ProductDetailContainer = ({
     setValue('comment', '');
     setRating(0);
     await fetchData();
+  };
+
+  const handleAddButton = () => {
+    if (quantity == 0) return;
+    dispatch(addToCart({ product: productDetail, count: quantity }));
   };
 
   useEffect(() => {
@@ -175,11 +193,7 @@ const ProductDetailContainer = ({
               </div>
               <button
                 type='button'
-                onClick={() =>
-                  dispatch(
-                    addToCart({ product: productDetail, count: quantity })
-                  )
-                }
+                onClick={handleAddButton}
                 className='ml-5 rounded border border-yellowColor bg-yellowColor px-2 text-lg font-semibold text-white transition-all
                     duration-300 hover:border-black hover:bg-white hover:text-black md:px-6 md:py-2'
               >
@@ -224,7 +238,7 @@ const ProductDetailContainer = ({
                   )}
                 </div>
                 <p className='mb-4 text-sm text-[#777]'>
-                  By #{product.user_id}
+                  By #{product.user.name}
                 </p>
                 <p className='mb-2'>{product.comment}</p>
                 <hr className='py-2' />

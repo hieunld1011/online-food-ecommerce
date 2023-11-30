@@ -43,7 +43,15 @@ export async function GET(request:Request,{params}:{params:IParams}){
             id:productId as string
           },
           include:{
-            reviews:true
+            reviews:{
+              include:{
+                user:{
+                  select:{
+                    name:true
+                  }
+                }
+              }
+            }
           }
         })
     

@@ -22,7 +22,7 @@ const OfferHome = () => {
             <p className='mb-4 w-[70%] pt-5 text-[#919191]'>
               Everything you order will be quickly delivered To your door.
             </p>
-            <span className='text-greenColor text-2xl font-bold'>$10.00</span>
+            <span className='text-2xl font-bold text-greenColor'>$10.00</span>
             <h4 className='mt-4 text-white'>Sale 60%</h4>
           </div>
           <div
@@ -30,7 +30,7 @@ const OfferHome = () => {
           bg-center bg-no-repeat pb-[34px] pl-10 pr-[90px] pt-[60px] md:w-1/2 md:flex-[0_0_50%] lg:w-1/3 lg:flex-[0_0_calc(100%/3)]'
           >
             <h3 className='text-2xl font-bold tracking-wide text-white'>
-              The BIg Burger premium
+              The Big Burger premium
             </h3>
             <p className='mb-4 w-[70%] pt-5 text-white'>
               Everything you order will be quickly delivered To your door.
@@ -48,7 +48,7 @@ const OfferHome = () => {
             <p className='mb-4 w-[70%] pt-5 text-[#919191]'>
               Everything you order will be quickly delivered To your door.
             </p>
-            <span className='text-greenColor text-2xl font-bold'>$10.00</span>
+            <span className='text-2xl font-bold text-greenColor'>$10.00</span>
             <h4 className='mt-4 text-white'>Sale 60%</h4>
           </div>
           <div

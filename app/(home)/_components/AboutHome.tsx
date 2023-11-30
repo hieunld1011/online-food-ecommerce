@@ -66,8 +66,8 @@ const AboutHome = () => {
             </div>
             <Link
               href={PATH_CONTACT}
-              className='rounded border border-yellowColor bg-yellowColor px-7 py-3 text-lg text-black
-              transition-all duration-500 hover:bg-white'
+              className='close rounded border border-yellowColor bg-yellowColor px-7 py-3 text-lg
+              transition-all duration-500 hover:bg-yellowColor hover:text-white'
             >
               Our Service
             </Link>

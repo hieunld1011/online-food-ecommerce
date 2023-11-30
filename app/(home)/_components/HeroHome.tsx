@@ -1,4 +1,4 @@
-import { PATH_CONTACT, PATH_SHOP } from '@/app/routes/router.path';
+import { PATH_ABOUT, PATH_CONTACT, PATH_SHOP } from '@/app/routes/router.path';
 import Image from 'next/image';
 import Link from '../../components/Link';
 
@@ -7,7 +7,7 @@ import backdrop from '../../assets/home/backdrop_img.png';
 
 const HeroHome = () => {
   return (
-    <section className='relative -z-10'>
+    <section className='relative'>
       <div
         className='flex 
       min-h-[calc(100vh_-_100px)] items-center justify-center bg-[url(/images/slider_bg.png)] bg-cover bg-center bg-no-repeat'
@@ -34,15 +34,15 @@ const HeroHome = () => {
                   href={PATH_SHOP}
                   primary
                   pad='sm:py-4 sm:px-9 px-4 py-2'
-                  classLink='font-semibold material-bubble'
+                  classLink='font-semibold close'
                 >
                   Our Menu
                 </Link>
                 <Link
-                  href={PATH_CONTACT}
+                  href={PATH_ABOUT}
                   primary
                   pad='sm:py-4 sm:px-9 px-4 py-2'
-                  classLink='font-semibold material-bubble'
+                  classLink='font-semibold close'
                 >
                   Our Contact
                 </Link>

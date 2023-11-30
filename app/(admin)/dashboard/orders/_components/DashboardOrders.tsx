@@ -145,7 +145,7 @@ const DashboardOrders = () => {
         return a.delivered.getTime() - b.delivered.getTime();
       },
       render: (value: Date) => {
-        return value.toLocaleString().slice(0, 10);
+        return value?.toLocaleString().slice(0, 10);
       },
     },
     {
@@ -154,7 +154,7 @@ const DashboardOrders = () => {
       key: 'createdAt',
       responsive: ['lg'],
       render: (value: Date) => {
-        return value.toLocaleString().slice(0, 10);
+        return value?.toLocaleString().slice(0, 10);
       },
     },
     {

@@ -9,13 +9,13 @@ import Slider from '@mui/material/Slider';
 
 import { categoProps, categoryLists } from '@/app/constants/products.constants';
 import { IoCart } from 'react-icons/io5';
-import { useAppDispatch, useAppSelector } from '@/app/stores/store';
-import { addToCart, incrementQuantity } from '@/app/stores/cartSlices';
+import { useAppDispatch } from '@/app/stores/store';
+import { incrementQuantity } from '@/app/stores/cartSlices';
 import clsx from 'clsx';
 
 const initialProduct = {
   id: '',
-  name: '',
+  productName: '',
   price: 0.0,
   category: '',
   description: '',
@@ -23,6 +23,7 @@ const initialProduct = {
   ratings: 0.0,
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
+  orderIds: [],
 };
 
 const ProductItems = () => {
@@ -86,7 +87,8 @@ const ProductItems = () => {
   };
 
   const nextPaginationHandler = () => {
-    if (pagination === Math.ceil(products.length / productPerPage)) return;
+    if (pagination === Math.ceil(filteredProduct.length / productPerPage))
+      return;
     setPagination(pagination + 1);
   };
 
@@ -178,7 +180,7 @@ const ProductItems = () => {
                   className='flex items-center justify-center py-4 transition-all duration-300 group-hover:opacity-50'
                 >
                   <Image
-                    src={product.picture[0]}
+                    src={product?.picture[0]}
                     alt='product'
                     width={130}
                     height={130}
@@ -190,7 +192,7 @@ const ProductItems = () => {
                       href={`/products/${product.id}`}
                       className='pl-5 text-lg font-semibold capitalize hover:text-yellowColor'
                     >
-                      {product.name}
+                      {product.productName}
                     </Link>
                     <span className='mt-1 pl-5 text-xs'>
                       {product.description}
@@ -226,7 +228,7 @@ const ProductItems = () => {
             </div>
             {[
               ...Array(
-                Math.floor(filteredProduct.length / productPerPage)
+                Math.ceil(filteredProduct.length / productPerPage)
               ).keys(),
             ].map((page: number, index) => (
               <div

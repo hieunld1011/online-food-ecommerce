@@ -1,21 +1,12 @@
 'use client';
 
-import {
-  Button,
-  ConfigProvider,
-  Input,
-  Modal,
-  Select,
-  Switch,
-  Table,
-} from 'antd';
+import { Input, Modal, Select, Table } from 'antd';
 
 import { UsersProps } from '@/app/types/index.types';
 import type { ColumnsType } from 'antd/es/table';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useCallback, useEffect, useState } from 'react';
-import { User } from '@prisma/client';
 import axios from 'axios';
 
 interface DataType {
@@ -26,7 +17,7 @@ interface DataType {
   role: string;
   numOfOrders: number;
   numOfReviews: number;
-  createdAt: string;
+  createdAt: Date;
 }
 
 const userData = [
@@ -74,7 +65,7 @@ const DashboardUsers = () => {
       role: user.role,
       numOfReviews: user.reviews.length,
       numOfOrders: user.orders.length,
-      createdAt: user.created_at.toLocaleString().slice(0, 10),
+      createdAt: user.created_at,
     };
 
     rows.push(data);
@@ -90,14 +81,20 @@ const DashboardUsers = () => {
     setEditingProduct({ ...record });
   };
 
-  const handleDeleteClick = (record: any) => {
-    deleteData(record);
+  const handleDeleteClick = (record: DataType) => {
+    Modal.confirm({
+      title: 'Are you sure deleting this user?',
+      okText: 'Yes',
+      okType: 'danger',
+      onOk: () => {
+        deleteData(record);
+      },
+    });
   };
 
   const columns: ColumnsType<DataType> = [
     {
       title: 'Name',
-      width: 150,
       dataIndex: 'name',
       key: 'name',
     },
@@ -105,19 +102,16 @@ const DashboardUsers = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      width: 150,
     },
     {
       title: 'Phone',
       dataIndex: 'phone',
       key: 'phone',
-      width: 150,
     },
     {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',
-      width: 100,
       filters: userData,
       onFilter: (value: any, record) => record.role?.indexOf(value) === 0,
     },
@@ -125,7 +119,6 @@ const DashboardUsers = () => {
       title: 'Orders',
       dataIndex: 'numOfOrders',
       key: 'numOfOrders',
-      width: 100,
       align: 'center',
       sorter: (a, b) => a.numOfOrders - b.numOfOrders,
     },
@@ -133,7 +126,6 @@ const DashboardUsers = () => {
       title: 'Reviews',
       dataIndex: 'numOfReviews',
       key: 'numOfReviews',
-      width: 100,
       align: 'center',
       sorter: (a, b) => a.numOfReviews - b.numOfReviews,
     },
@@ -141,14 +133,16 @@ const DashboardUsers = () => {
       title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 150,
+      responsive: ['lg'],
+      render: (value: Date) => {
+        return value.toLocaleString().slice(0, 10);
+      },
     },
     {
       title: 'Action',
       key: 'operation',
       align: 'center',
       fixed: 'right',
-      width: 100,
       render: (record) => (
         <>
           <EditIcon
@@ -169,10 +163,8 @@ const DashboardUsers = () => {
       <Table
         columns={columns}
         dataSource={rows}
-        scroll={{ x: 'max-content' }}
-        className='max-w-[300px] md:max-w-[700px] lg:max-w-[1100px]'
-        sticky={{ offsetHeader: 64 }}
-        tableLayout='auto'
+        scroll={{ x: true }}
+        className='max-w-[300px] md:max-w-[550px] lg:max-w-full'
       />
       <Modal
         title='Edit Product'

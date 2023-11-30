@@ -5,5 +5,12 @@
     "prettier",
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended"
-  ]
+  ],
+  "plugins":["@typescript-eslint"],
+  "rules":{
+    // "no-unused-vars":"off",
+    // "@typescript-eslint/no-unused-vars":["error"],
+    // "import/no-unresolved":"error",
+    // "import/named":"error"
+  }
 }

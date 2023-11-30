@@ -1,22 +1,17 @@
 'use client';
 
-import {
-  Button,
-  ConfigProvider,
-  Form,
-  Modal,
-  Input,
-  Table,
-  Typography,
-} from 'antd';
-
-import { ProductsProps, UsersProps } from '@/app/types/index.types';
 import type { ColumnsType } from 'antd/es/table';
+import { useCallback, useEffect, useState } from 'react';
+import { Modal, Input, Table, Button } from 'antd';
+import { CldUploadButton } from 'next-cloudinary';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import Image from 'next/image';
+
+import { ProductsProps } from '@/app/types/index.types';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import { useCallback, useEffect, useState } from 'react';
-import { Product, User } from '@prisma/client';
-import axios from 'axios';
+import { HiPhotograph } from 'react-icons/hi';
 
 interface DataType {
   key: React.Key;
@@ -24,15 +19,32 @@ interface DataType {
   category: string;
   ratings: number | null;
   price: number;
+  picture?: string;
+  description?: string;
   numOfReviews: number;
   numOfOrders: number;
-  createdAt: string;
+  createdAt: Date;
 }
+
+const productProps: DataType = {
+  key: '',
+  product: '',
+  category: 'burger',
+  ratings: 0.0,
+  price: 0.0,
+  numOfReviews: 0,
+  numOfOrders: 0,
+  picture: '',
+  description: '',
+  createdAt: new Date(Date.now()),
+};
 
 const DashboardProducts = () => {
   const rows: DataType[] = [];
   const [products, setProducts] = useState<ProductsProps[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [addingProduct, setAddingProduct] = useState<DataType>(productProps);
   const [editingProduct, setEditingProduct] = useState<DataType>();
 
   const fetchData = useCallback(async () => {
@@ -50,6 +62,22 @@ const DashboardProducts = () => {
     await fetchData();
   };
 
+  const addData = async () => {
+    if (addingProduct.ratings)
+      addingProduct.ratings = parseFloat(addingProduct?.ratings.toString());
+    else addingProduct.ratings = 0;
+
+    addingProduct.price = parseFloat(addingProduct?.price.toString());
+
+    if (!addingProduct.picture) {
+      toast.error('Image is required!');
+      return;
+    }
+
+    await axios.post(`/api/products`, addingProduct);
+    await fetchData();
+  };
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -63,7 +91,7 @@ const DashboardProducts = () => {
       price: product.price,
       numOfOrders: product.orders.length,
       numOfReviews: product.reviews.length,
-      createdAt: product.created_at.toLocaleString().slice(0, 10),
+      createdAt: product.created_at,
     };
 
     rows.push(data);
@@ -71,7 +99,13 @@ const DashboardProducts = () => {
 
   const resetEditing = () => {
     setIsEditing(false);
+    setIsAdding(false);
+    setAddingProduct(productProps);
     setEditingProduct(undefined);
+  };
+
+  const handleAddClick = () => {
+    setIsAdding(true);
   };
 
   const handleEditClick = (record: DataType) => {
@@ -80,13 +114,19 @@ const DashboardProducts = () => {
   };
 
   const handleDeleteClick = (record: DataType) => {
-    deleteData(record);
+    Modal.confirm({
+      title: 'Are you sure deleting this product?',
+      okText: 'Yes',
+      okType: 'danger',
+      onOk: () => {
+        deleteData(record);
+      },
+    });
   };
 
   const columns: ColumnsType<DataType> = [
     {
       title: 'Product',
-      width: 150,
       dataIndex: 'product',
       key: 'product',
     },
@@ -94,27 +134,33 @@ const DashboardProducts = () => {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
-      width: 150,
+      responsive: ['lg'],
+      filters: [...new Set(products.map((product) => product.category))].map(
+        (item) => ({ value: item, text: item })
+      ),
+      filterMode: 'tree',
+      filterSearch: true,
+      onFilter: (value: any, record) => record.category.startsWith(value),
     },
     {
       title: 'Ratings',
       dataIndex: 'ratings',
       key: 'ratings',
-      width: 100,
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
-      width: 100,
       align: 'center',
       sorter: (a, b) => a.price - b.price,
+      render: (value: number) => {
+        return '$' + value.toFixed(2);
+      },
     },
     {
       title: 'Orders',
       dataIndex: 'numOfOrders',
       key: 'numOfOrders',
-      width: 100,
       align: 'center',
       sorter: (a, b) => a.numOfOrders - b.numOfOrders,
     },
@@ -122,7 +168,6 @@ const DashboardProducts = () => {
       title: 'Reviews',
       dataIndex: 'numOfReviews',
       key: 'numOfReviews',
-      width: 100,
       align: 'center',
       sorter: (a, b) => a.numOfReviews - b.numOfReviews,
     },
@@ -130,14 +175,16 @@ const DashboardProducts = () => {
       title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 150,
+      responsive: ['lg'],
+      render: (value: Date) => {
+        return value.toLocaleString().slice(0, 10);
+      },
     },
     {
       title: 'Action',
       key: 'operation',
       align: 'center',
       fixed: 'right',
-      width: 100,
       render: (record: DataType) => {
         return (
           <>
@@ -159,13 +206,17 @@ const DashboardProducts = () => {
 
   return (
     <>
+      <Button
+        className='mb-4 max-w-[120px] bg-blue-400 text-white hover:bg-transparent'
+        onClick={handleAddClick}
+      >
+        Add Product
+      </Button>
       <Table
         columns={columns}
         dataSource={rows}
-        scroll={{ x: 'max-content' }}
-        className='max-w-[300px] md:max-w-[700px] lg:max-w-[1100px]'
-        sticky={{ offsetHeader: 64 }}
-        tableLayout='auto'
+        scroll={{ x: true }}
+        className='max-w-[300px] md:max-w-[550px] lg:max-w-full'
       />
       <Modal
         title='Edit Product'
@@ -204,6 +255,130 @@ const DashboardProducts = () => {
                 return { ...pre, price: e.target.value };
               })
             }
+          />
+        </div>
+      </Modal>
+      <Modal
+        title='Adding Product'
+        open={isAdding}
+        okText='Save'
+        onCancel={() => resetEditing()}
+        onOk={() => {
+          addData();
+          resetEditing();
+        }}
+      >
+        <hr />
+        <div className='mb-6 mt-3'>
+          <label className='font-semibold' htmlFor='addName'>
+            Name <span className='text-sm text-redColor'>*</span>
+          </label>
+          <Input
+            value={editingProduct?.product}
+            onChange={(e) =>
+              setAddingProduct((pre: any) => {
+                return { ...pre, product: e.target.value };
+              })
+            }
+            id='addName'
+            required
+          />
+        </div>
+        <label className='font-semibold'>
+          Image <span className='text-sm text-redColor'>*</span>
+        </label>
+        <CldUploadButton
+          options={{ maxFiles: 1, folder: '/food_ecommerce' }}
+          onUpload={(result) => {
+            setAddingProduct((pre: any) => {
+              return {
+                ...pre,
+                picture: result?.info?.secure_url,
+              };
+            });
+          }}
+          uploadPreset='foodEcommerce'
+          className='w-full'
+        >
+          {addingProduct.picture ? (
+            <Image
+              src={addingProduct.picture}
+              alt='image'
+              height={100}
+              width={100}
+            />
+          ) : (
+            <HiPhotograph size={30} className=' text-sky-500' />
+          )}
+        </CldUploadButton>
+        <label className='font-semibold' htmlFor='selectCategory'>
+          Choose category:{' '}
+        </label>
+        <select
+          id='selectCategory'
+          className='my-3 rounded border px-2 outline-none'
+          onChange={(e) =>
+            setAddingProduct((pre: any) => {
+              return { ...pre, category: e.target.value };
+            })
+          }
+        >
+          {['burger', 'beverage'].map((cate, index) => (
+            <option key={index} value={cate}>
+              {cate}
+            </option>
+          ))}
+        </select>
+        <div className='mb-6 mt-3'>
+          <label htmlFor='ratingProduct' className='font-semibold'>
+            Ratings{' '}
+            <span className='text-sm text-redColor'>(must be under 5.0)</span>
+          </label>
+          <Input
+            id='ratingProduct'
+            value={addingProduct?.ratings!}
+            onChange={(e) => {
+              setAddingProduct((pre: any) => {
+                return {
+                  ...pre,
+                  ratings: e.target.value,
+                };
+              });
+            }}
+          />
+        </div>
+        <div className='mb-6 mt-3 flex flex-col'>
+          <label htmlFor='descProduct' className='font-semibold'>
+            Description <span className='text-sm text-redColor'>*</span>
+          </label>
+          <textarea
+            id='descProduct'
+            value={addingProduct?.description!}
+            onChange={(e) =>
+              setAddingProduct((pre: any) => {
+                return { ...pre, description: e.target.value };
+              })
+            }
+            className='border p-2 text-sm outline-none'
+            required
+          />
+        </div>
+        <div className='my-3'>
+          <label className='font-semibold' htmlFor='addPrice'>
+            Price <span className='text-sm text-redColor'>*</span>
+          </label>
+          <Input
+            value={addingProduct?.price}
+            id='addPrice'
+            onChange={(e) =>
+              setAddingProduct((pre: any) => {
+                return {
+                  ...pre,
+                  price: e.target.value,
+                };
+              })
+            }
+            required
           />
         </div>
       </Modal>

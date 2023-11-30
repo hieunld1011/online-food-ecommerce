@@ -8,13 +8,13 @@ interface IParams {
 export async function DELETE(req:Request,{params}:{params:IParams}){
     try {
         const {orderId}=params
-        const users = await prisma.order.findUnique({
+        const orders = await prisma.order.findUnique({
             where:{
                 id:orderId
             }
           });
       
-          if(!users){
+          if(!orders){
               return new NextResponse("Can't get order", {
                   status: 402,
               });

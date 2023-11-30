@@ -1,4 +1,3 @@
-import getUser from "@/app/actions/getUser";
 import prisma from "@/app/utils/prismadb.utils";
 import { NextResponse } from "next/server";
 

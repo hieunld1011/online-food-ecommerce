@@ -6,7 +6,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUser();
 
   return (
-    <div className='flex min-h-screen flex-row bg-neutral-100'>
+    <div className='flex min-h-screen bg-neutral-100'>
       <DashboardSidebar />
       <div className='flex flex-1 flex-col'>
         <DashboardHeader user={user!} />

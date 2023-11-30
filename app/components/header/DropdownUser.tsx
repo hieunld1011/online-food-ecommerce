@@ -17,6 +17,8 @@ const DropdownUser = ({ user }: { user: User }) => {
             src={user.image || '/images/placeholder.jpg'}
             alt={user.name!}
             className='h-[30px] w-[30px] rounded-full'
+            width={30}
+            height={30}
           />
         </Menu.Button>
       </div>

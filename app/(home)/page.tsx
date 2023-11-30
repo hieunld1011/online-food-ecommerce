@@ -7,7 +7,7 @@ import HeroHome from './_components/HeroHome';
 import MenuHome from './_components/MenuHome';
 import OfferHome from './_components/OfferHome';
 import TestimonialHome from './_components/TestimonialHome';
-import LoadingModal from '../components/LoadingModal';
+import Loading from './loading';
 
 const Home = () => {
   return (
@@ -16,7 +16,7 @@ const Home = () => {
       <FeatureHome />
       <AboutHome />
       <OfferHome />
-      <Suspense fallback={<LoadingModal />}>
+      <Suspense fallback={<Loading />}>
         <MenuHome />
       </Suspense>
       <TestimonialHome />

@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { cartSlice } from "./cartSlices";
-import { useDispatch,TypedUseSelectorHook,useSelector } from "react-redux";
+import { useDispatch, TypedUseSelectorHook ,useSelector } from "react-redux";
 
 export const store =configureStore({
   reducer: {

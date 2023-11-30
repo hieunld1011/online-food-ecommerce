@@ -18,7 +18,7 @@ interface DataType {
   status: string | null;
   total: number;
   delivered: Date | null;
-  createdAt: string;
+  createdAt: Date;
 }
 
 const statusData = [
@@ -67,7 +67,7 @@ const DashboardOrders = () => {
       status: order.status,
       total: order.total,
       delivered: order.deliveredTime,
-      createdAt: order.created_at.toLocaleString().slice(0, 10),
+      createdAt: order.created_at,
     };
 
     rows.push(data);
@@ -84,13 +84,19 @@ const DashboardOrders = () => {
   };
 
   const handleDeleteClick = (record: DataType) => {
-    deleteData(record);
+    Modal.confirm({
+      title: 'Are you sure deleting this order?',
+      okText: 'Yes',
+      okType: 'danger',
+      onOk: () => {
+        deleteData(record);
+      },
+    });
   };
 
   const columns: ColumnsType<DataType> = [
     {
       title: 'Name',
-      width: 150,
       dataIndex: 'name',
       key: 'name',
     },
@@ -98,57 +104,64 @@ const DashboardOrders = () => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      width: 150,
     },
     {
       title: 'Phone',
       dataIndex: 'phone',
       key: 'phone',
-      width: 150,
     },
     {
       title: 'Notes',
       dataIndex: 'notes',
       key: 'notes',
-      width: 150,
+      responsive: ['lg'],
     },
     {
       title: 'Total',
       dataIndex: 'total',
       key: 'total',
-      width: 100,
       align: 'center',
       sorter: (a, b) => a.total - b.total,
+      render: (value: number) => {
+        return '$' + value.toFixed(2);
+      },
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 150,
       filters: statusData,
-      onFilter: (value: any, record) => record.status?.indexOf(value) === 0,
+      onFilter: (value: any, record) => {
+        if (!value) return false;
+        return record.status?.indexOf(value) === 0;
+      },
     },
     {
       title: 'Deliver Time',
       dataIndex: 'delivered',
       key: 'delivered',
-      width: 150,
-      render: (record: DataType) => (
-        <span>{record?.delivered?.toISOString()}</span>
-      ),
+      sorter: (a, b) => {
+        if (!a.delivered || !b.delivered) return 0;
+        return a.delivered.getTime() - b.delivered.getTime();
+      },
+      render: (value: Date) => {
+        return value.toLocaleString().slice(0, 10);
+      },
     },
     {
       title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 150,
+      responsive: ['lg'],
+      render: (value: Date) => {
+        return value.toLocaleString().slice(0, 10);
+      },
     },
     {
       title: 'Action',
       key: 'operation',
       align: 'center',
       fixed: 'right',
-      width: 100,
       render: (record) => (
         <>
           <EditIcon
@@ -169,10 +182,8 @@ const DashboardOrders = () => {
       <Table
         columns={columns}
         dataSource={rows}
-        scroll={{ x: 'max-content' }}
-        className='max-w-[300px] md:max-w-[700px] lg:max-w-[1100px]'
-        sticky={{ offsetHeader: 64 }}
-        tableLayout='auto'
+        scroll={{ x: true }}
+        className='max-w-[300px] md:max-w-[550px] lg:max-w-full'
       />
       <Modal
         title='Edit Product'

@@ -4,11 +4,7 @@ import { Fragment } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { Menu, Popover, Transition } from '@headlessui/react';
-import {
-  HiOutlineBell,
-  HiOutlineSearch,
-  HiOutlineChatAlt,
-} from 'react-icons/hi';
+import { HiOutlineBell, HiOutlineSearch } from 'react-icons/hi';
 import { PATH_HOME, PATH_PROFILE } from '@/app/routes/router.path';
 import { signOut } from 'next-auth/react';
 import { User } from '@prisma/client';

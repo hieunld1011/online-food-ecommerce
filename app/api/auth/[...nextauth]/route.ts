@@ -4,9 +4,7 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { Adapter } from 'next-auth/adapters';
-import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
-// import { cookies } from "next/headers";
 
 import prisma from '@/app/utils/prismadb.utils';
 

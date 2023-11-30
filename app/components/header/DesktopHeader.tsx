@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import { IoSearch, IoCart } from 'react-icons/io5';
+import { IoCart } from 'react-icons/io5';
 import { FaUser } from 'react-icons/fa';
 
 import Logo from '@/app/assets/home/logo.png';
@@ -22,6 +23,8 @@ const DesktopHeader = ({ user }: { user: User }) => {
   const [isNavFixed, setIsNavFixed] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const quantity = useAppSelector((state) => totalCartItemSelector(state));
+
+  const pathname = usePathname();
 
   const fixedNav = () => {
     let scrollTop = window.scrollY;
@@ -59,7 +62,10 @@ const DesktopHeader = ({ user }: { user: User }) => {
                 <div className='ml-8 py-9' key={link.label}>
                   <Link
                     href={link.href}
-                    className='py-9 text-sm font-medium uppercase text-white transition-all duration-500 hover:text-yellowColor lg:text-xl'
+                    className={clsx(
+                      `uppercasetransition-all py-9 text-sm font-medium duration-500 hover:text-yellowColor lg:text-xl`,
+                      pathname === link.href ? 'text-yellowColor' : 'text-white'
+                    )}
                   >
                     {link.label}
                   </Link>

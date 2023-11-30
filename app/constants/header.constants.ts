@@ -1,7 +1,6 @@
 import {
   PATH_ABOUT,
   PATH_CART,
-  PATH_CONTACT,
   PATH_HOME,
   PATH_SHOP,
 } from '@/app/routes/router.path';

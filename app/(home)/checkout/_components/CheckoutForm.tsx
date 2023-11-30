@@ -26,7 +26,6 @@ const CheckoutForm = ({ user }: { user: User }) => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<FieldValues>();
 

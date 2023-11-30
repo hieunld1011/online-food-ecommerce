@@ -56,19 +56,21 @@ const Footer = () => {
             <p className='mb-6 mt-[43px] text-lg text-[#919191]'>
               Newsletter Exclusive Discount
             </p>
-            <div className='relative'>
+            <form className='relative'>
               <input
                 type='email'
                 placeholder='your email'
                 className='h-[40px] w-full px-2 py-1 outline-none'
+                required
+                pattern='/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/'
               />
               <button
-                type='submit'
+                type='button'
                 className='absolute right-0 top-0 h-[40px] cursor-pointer bg-yellowBg px-5 text-black'
               >
                 Gmail
               </button>
-            </div>
+            </form>
           </div>
           <div className='flex flex-col'>
             <h3 className='h-[25px] text-2xl font-semibold uppercase text-white'>
@@ -78,8 +80,8 @@ const Footer = () => {
               Newsletter Exclusive
             </p>
             <div className='flex gap-6'>
-              <Image src={thumb1} alt='thumb' />
-              <Image src={thumb2} alt='thumb' />
+              <Image src={thumb1} alt='thumb' width={100} height={100} />
+              <Image src={thumb2} alt='thumb' width={100} height={100} />
             </div>
           </div>
         </div>

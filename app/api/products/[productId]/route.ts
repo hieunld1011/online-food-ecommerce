@@ -1,6 +1,5 @@
 import prisma from '@/app/utils/prismadb.utils';
-import { NextApiRequest } from 'next';
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 
 interface IParams{
   productId?:string
@@ -10,7 +9,7 @@ export async function DELETE(request:Request,{params}:{params:IParams}){
     try {
       const {productId}=params
   
-      const isProductExist = prisma.product.findUnique({
+      const isProductExist =await prisma.product.findUnique({
         where:{
           id:productId as string
         }
@@ -22,7 +21,7 @@ export async function DELETE(request:Request,{params}:{params:IParams}){
         });
       }
   
-      const deletedProduct = prisma.product.delete({
+      const deletedProduct =await prisma.product.delete({
         where:{
           id:productId
         }

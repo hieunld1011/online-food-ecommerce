@@ -15,7 +15,6 @@ import { ProductDetailsType } from '@/app/types/products.types';
 import { useAppDispatch } from '@/app/stores/store';
 import { addToCart } from '@/app/stores/cartSlices';
 import { PATH_LOGIN } from '@/app/routes/router.path';
-import getUserById from '@/app/actions/getUserById';
 import { Rating } from '@mui/material';
 import axios from 'axios';
 
@@ -211,8 +210,6 @@ const ProductDetailContainer = ({
           <h3 className='text-3xl font-medium'>Reviews</h3>
           <hr className='py-2' />
           {productDetail.reviews.map((product) => {
-            // const getUsers = await getUserById(product.id, product.user_id!);
-
             return (
               <div className='my-4 w-full' key={product.id}>
                 <div className='mb-2 mr-2 flex text-yellowColor'>

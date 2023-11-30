@@ -25,7 +25,8 @@ export const cartSlice = createSlice({
     // Action to set the authentication status
     addToCart:(state,action:PayloadAction<AddProductType>)=>{
       const item = state.cartItems.find((item)=>item.product.id===action.payload.product.id)
-      if(item)item.quantity+=action.payload.count;
+      if(item&&item.quantity==0)return state
+      else if(item&&item.quantity>0)item.quantity+=action.payload.count;
       else {
         state.cartItems.push({
           product:action.payload.product,

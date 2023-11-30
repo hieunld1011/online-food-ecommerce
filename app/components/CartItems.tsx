@@ -8,7 +8,6 @@ import {
   incrementQuantity,
   removeFromCart,
 } from '../stores/cartSlices';
-import Image from 'next/image';
 
 const CartItems = ({ quantity, item }: { quantity: number; item: Product }) => {
   const dispatch = useAppDispatch();
@@ -22,7 +21,7 @@ const CartItems = ({ quantity, item }: { quantity: number; item: Product }) => {
     >
       <div className='m-h-[150px] flex w-full items-center gap-x-4 py-2'>
         <Link href={`/products/${id}`}>
-          <Image className='max-w-[80px]' src={picture[0]} alt={productName} />
+          <img className='max-w-[80px]' src={picture[0]} alt={productName} />
         </Link>
         <div className='flex w-full flex-col'>
           <div className='mb-2 flex justify-between'>

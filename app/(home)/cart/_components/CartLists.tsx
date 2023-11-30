@@ -54,7 +54,7 @@ const CartLists = () => {
                 </thead>
                 <tbody>
                   {cart.cartItems.map((item) => (
-                    <CartListItems item={item} key={item.product.id} />
+                    <CartListItems item={item} />
                   ))}
                 </tbody>
               </table>

@@ -6,14 +6,13 @@ import {
   PATH_DASHBOARD_PRODUCTS,
   PATH_PROFILE,
 } from '@/app/routes/router.path';
-import Image from 'next/image';
 
 const DropdownUser = ({ user }: { user: User }) => {
   return (
     <Menu as={'div'}>
       <div className='cursor-pointer' aria-expanded='true' aria-haspopup='true'>
         <Menu.Button className={'flex items-center'}>
-          <Image
+          <img
             src={user.image || '/images/placeholder.jpg'}
             alt={user.name!}
             className='h-[30px] w-[30px] rounded-full'

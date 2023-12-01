@@ -84,7 +84,7 @@ const ProductDetailContainer = ({
   const fetchData = useCallback(async () => {
     const { data } = await axios.get(`/api/products/${params.productId}`);
     setProductDetail(data);
-  }, []);
+  }, [params.productId]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     await axios.post('/api/review', {

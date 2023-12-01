@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 
 import { Input } from '@/app/components/Input';
 import AuthSocialButton from './AuthSocialButton';
+import { PATH_HOME } from '@/app/routes/router.path';
 
 interface AuthFormProps {
   toggleVariant: 'LOGIN' | 'REGISTER';
@@ -48,8 +49,7 @@ const AuthForm = ({ toggleVariant, setToggleVariant }: AuthFormProps) => {
 
         if (callback?.ok && !callback.error) {
           toast.success('Logged In!');
-          router.push('/');
-          window.location.reload();
+          router.push(PATH_HOME);
         }
       });
     } catch (error) {

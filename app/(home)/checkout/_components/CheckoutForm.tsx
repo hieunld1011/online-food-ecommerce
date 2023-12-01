@@ -2,10 +2,11 @@
 
 import { PATH_SHOP } from '@/app/routes/router.path';
 import {
+  clearCart,
   totalCartItemSelector,
   totalPriceSelector,
 } from '@/app/stores/cartSlices';
-import { useAppSelector } from '@/app/stores/store';
+import { useAppDispatch, useAppSelector } from '@/app/stores/store';
 import { User } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -19,6 +20,7 @@ const CheckoutForm = ({ user }: { user: User }) => {
   const regExpNumber = new RegExp(
     /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g
   );
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
   const listProducts = cart.cartItems.map((item) => item.product.id) || [];
@@ -40,6 +42,7 @@ const CheckoutForm = ({ user }: { user: User }) => {
           total: parseFloat((total + 10).toFixed(2)),
         })
         .then(() => router.push(PATH_SHOP))
+        .then(() => dispatch(clearCart()))
         .catch(() => toast.error('Cant order products'));
     } catch (error) {
       toast.error('Register: ' + error);

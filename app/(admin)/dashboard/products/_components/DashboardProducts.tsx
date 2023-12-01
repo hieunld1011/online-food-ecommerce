@@ -154,7 +154,11 @@ const DashboardProducts = () => {
       align: 'center',
       sorter: (a, b) => a.price - b.price,
       render: (value: number) => {
-        return '$' + value.toFixed(2);
+        return (
+          <span className='font-semibold text-greenColor'>
+            {'$' + value.toFixed(2)}
+          </span>
+        );
       },
     },
     {
@@ -243,6 +247,24 @@ const DashboardProducts = () => {
             id='editName'
           />
         </div>
+        <label className='font-semibold' htmlFor='selectEditCategory'>
+          Choose category:{' '}
+        </label>
+        <select
+          id='selectEditCategory'
+          className='my-3 rounded border px-2 outline-none'
+          onChange={(e) =>
+            setAddingProduct((pre: any) => {
+              return { ...pre, category: e.target.value };
+            })
+          }
+        >
+          {['burger', 'beverage'].map((cate, index) => (
+            <option key={index} value={cate}>
+              {cate}
+            </option>
+          ))}
+        </select>
         <div className='mb-3 mt-6'>
           <label className='mt-6 font-semibold' htmlFor='editPrice'>
             Price

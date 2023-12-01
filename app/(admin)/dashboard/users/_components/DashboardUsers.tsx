@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import clsx from 'clsx';
 
 interface DataType {
   key: React.Key;
@@ -29,17 +30,26 @@ const userData = [
     text: 'Admin',
     value: 'admin',
   },
+  {
+    text: 'Invalid',
+    value: 'invalid',
+  },
 ];
 
 const DashboardUsers = () => {
   const rows: DataType[] = [];
   const [users, setUsers] = useState<UsersProps[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editingUsers, setEditingProduct] = useState<DataType>();
+  const [editingUsers, setEditingUsers] = useState<DataType>();
 
   const fetchData = useCallback(async () => {
     const { data } = await axios.get('/api/users');
-    setUsers(data);
+    setUsers(
+      data.sort(
+        (a: UsersProps, b: UsersProps) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )
+    );
   }, []);
 
   const editData = async (record: DataType) => {
@@ -73,21 +83,29 @@ const DashboardUsers = () => {
 
   const resetEditing = () => {
     setIsEditing(false);
-    setEditingProduct(undefined);
+    setEditingUsers(undefined);
   };
 
   const handleEditClick = (record: DataType) => {
     setIsEditing(true);
-    setEditingProduct({ ...record });
+    setEditingUsers({ ...record });
   };
 
   const handleDeleteClick = (record: DataType) => {
     Modal.confirm({
-      title: 'Are you sure deleting this user?',
+      title: `Are you sure ${
+        record.role === 'invalid' ? 'DELETING' : 'INVALID'
+      } this order?`,
       okText: 'Yes',
       okType: 'danger',
       onOk: () => {
-        deleteData(record);
+        if (record.role === 'invalid') {
+          return deleteData(record);
+        }
+        setEditingUsers(() => {
+          return { ...record, role: 'invalid' };
+        });
+        editData(editingUsers!);
       },
     });
   };
@@ -114,6 +132,23 @@ const DashboardUsers = () => {
       key: 'role',
       filters: userData,
       onFilter: (value: any, record) => record.role?.indexOf(value) === 0,
+      render: (value: string) => {
+        return (
+          <span
+            className={clsx(
+              `
+              font-semibold`,
+              value === 'user'
+                ? 'text-yellowColor'
+                : value === 'invalid'
+                ? 'text-redColor'
+                : 'text-greenColor'
+            )}
+          >
+            {value}
+          </span>
+        );
+      },
     },
     {
       title: 'Orders',
@@ -184,7 +219,7 @@ const DashboardUsers = () => {
           <Input
             value={editingUsers?.name!}
             onChange={(e) =>
-              setEditingProduct((pre: any) => {
+              setEditingUsers((pre: any) => {
                 return { ...pre, name: e.target.value };
               })
             }
@@ -198,8 +233,8 @@ const DashboardUsers = () => {
           <Select
             value={editingUsers?.role}
             onChange={(e) =>
-              setEditingProduct((pre: any) => {
-                return { ...pre, status: e };
+              setEditingUsers((pre: any) => {
+                return { ...pre, role: e };
               })
             }
             options={userData.map((data) => ({
@@ -217,7 +252,7 @@ const DashboardUsers = () => {
             value={editingUsers?.phone!}
             id='editPhone'
             onChange={(e) =>
-              setEditingProduct((pre: any) => {
+              setEditingUsers((pre: any) => {
                 return { ...pre, phone: e.target.value };
               })
             }

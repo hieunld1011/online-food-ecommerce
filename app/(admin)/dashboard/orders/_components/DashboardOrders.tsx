@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useCallback, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import clsx from 'clsx';
 
 interface DataType {
   key: React.Key;
@@ -22,6 +23,10 @@ interface DataType {
 }
 
 const statusData = [
+  {
+    text: 'Invalid',
+    value: 'invalid',
+  },
   {
     text: 'Processing',
     value: 'processing',
@@ -40,7 +45,12 @@ const DashboardOrders = () => {
 
   const fetchData = useCallback(async () => {
     const { data } = await axios.get('/api/order');
-    setOrders(data);
+    setOrders(
+      data.sort(
+        (a: OrdersProps, b: OrdersProps) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      )
+    );
   }, []);
 
   const deleteData = async (record: any) => {
@@ -85,11 +95,19 @@ const DashboardOrders = () => {
 
   const handleDeleteClick = (record: DataType) => {
     Modal.confirm({
-      title: 'Are you sure deleting this order?',
+      title: `Are you sure ${
+        record.status === 'invalid' ? 'DELETING' : 'INVALID'
+      } this order?`,
       okText: 'Yes',
       okType: 'danger',
       onOk: () => {
-        deleteData(record);
+        if (record.status === 'invalid') {
+          return deleteData(record);
+        }
+        setEditingProduct(() => {
+          return { ...record, status: 'invalid' };
+        });
+        editData(editingOrder!);
       },
     });
   };
@@ -134,6 +152,23 @@ const DashboardOrders = () => {
       onFilter: (value: any, record) => {
         if (!value) return false;
         return record.status?.indexOf(value) === 0;
+      },
+      render: (value: string) => {
+        return (
+          <span
+            className={clsx(
+              `
+              font-semibold`,
+              value === 'processing'
+                ? 'text-yellowColor'
+                : value === 'invalid'
+                ? 'text-redColor'
+                : 'text-greenColor'
+            )}
+          >
+            {value}
+          </span>
+        );
       },
     },
     {

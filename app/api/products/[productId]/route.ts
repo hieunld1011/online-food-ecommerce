@@ -73,7 +73,7 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
     const body =await req.json()
     const {productId}=params
 
-    const {product,price}=body
+    const {product,price,category}=body
 
     const isProductExist =await prisma.product.findUnique({
       where:{
@@ -93,7 +93,8 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
       },
       data:{
         productName:product,
-        price:price
+        price:price,
+        category:category
       }
     })
 

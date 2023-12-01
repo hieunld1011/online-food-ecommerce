@@ -3,7 +3,7 @@
 import type { ColumnsType } from 'antd/es/table';
 import { useCallback, useEffect, useState } from 'react';
 import { Modal, Input, Table, Button } from 'antd';
-import { CldUploadButton } from 'next-cloudinary';
+import { CldUploadButton, CldUploadWidgetResults } from 'next-cloudinary';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Image from 'next/image';
@@ -311,7 +311,7 @@ const DashboardProducts = () => {
         </label>
         <CldUploadButton
           options={{ maxFiles: 1, folder: '/food_ecommerce' }}
-          onUpload={(result) => {
+          onUpload={(result: any) => {
             setAddingProduct((pre: any) => {
               return {
                 ...pre,

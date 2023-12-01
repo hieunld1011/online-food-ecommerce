@@ -134,7 +134,7 @@ const AuthForm = ({ toggleVariant, setToggleVariant }: AuthFormProps) => {
         Sign In
       </button>
       <p className='mt-4 text-center'>
-        Don't have an account?
+        Don&#39;t have an account?
         <span
           className='ml-1 cursor-pointer text-yellowColor transition-all 
         duration-200 hover:text-linkColor hover:underline'

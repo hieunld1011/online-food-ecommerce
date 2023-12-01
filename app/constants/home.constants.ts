@@ -6,6 +6,9 @@ import cusomter1 from '../assets/home/testimonial-1.jpg';
 import cusomter2 from '../assets/home/testimonial-2.jpg';
 import cusomter3 from '../assets/home/testimonial-3.jpg';
 import { FaFacebookF, FaVimeoV, FaTwitter, FaTumblr } from 'react-icons/fa';
+import { LuPhone } from 'react-icons/lu';
+import { PiEnvelope } from 'react-icons/pi';
+import { SlLocationPin } from "react-icons/sl";
 
 export const featureOffers = [
   {
@@ -86,5 +89,26 @@ export const mediaLinks = [
   {
     icon:FaTumblr as IconType,
     href:'#'
+  },
+]
+
+export const contactInfo = [
+  {
+    icon:LuPhone as IconType,
+    title:'Phone' as string,
+    upContent:'(+65) - 48596 - 5789' as string,
+    lowContent:'+65-48596-5789' as string
+  },
+  {
+    icon:PiEnvelope as IconType,
+    title:'Email' as string,
+    upContent:'info@pizzer.com' as string,
+    lowContent:'info.example@gmail.com' as string
+  },
+  {
+    icon:SlLocationPin as IconType,
+    title:'Location' as string,
+    upContent:'1403 Washington Ave' as string,
+    lowContent:'LA 70130, United States' as string
   },
 ]

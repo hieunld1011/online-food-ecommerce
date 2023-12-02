@@ -1,4 +1,4 @@
-import { PATH_ABOUT, PATH_CONTACT, PATH_SHOP } from '@/app/routes/router.path';
+import { PATH_CONTACT, PATH_SHOP } from '@/app/routes/router.path';
 import Image from 'next/image';
 import Link from '../../components/Link';
 
@@ -39,7 +39,7 @@ const HeroHome = () => {
                   Our Menu
                 </Link>
                 <Link
-                  href={PATH_ABOUT}
+                  href={PATH_CONTACT}
                   primary
                   pad='sm:py-4 sm:px-9 px-4 py-2'
                   classLink='font-semibold close'

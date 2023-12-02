@@ -40,7 +40,7 @@ const EditProfilePage = ({ user }: { user: User }) => {
             type='text'
             id='username'
             {...register('username', { required: true })}
-            defaultValue={user.name || ''}
+            defaultValue={user?.name || ''}
             className='rounded-md border px-3 py-2 outline-none'
           />
         </div>
@@ -52,7 +52,7 @@ const EditProfilePage = ({ user }: { user: User }) => {
             type='email'
             id='email'
             {...register('email', { required: true })}
-            defaultValue={user.email || ''}
+            defaultValue={user?.email || ''}
             className='rounded-md border px-3 py-2 outline-none'
             readOnly
           />
@@ -65,7 +65,7 @@ const EditProfilePage = ({ user }: { user: User }) => {
             type='text'
             id='phone'
             {...register('phone', { required: true })}
-            defaultValue={user.phone || ''}
+            defaultValue={user?.phone || ''}
             className='rounded-md border px-3 py-2 outline-none'
           />
         </div>

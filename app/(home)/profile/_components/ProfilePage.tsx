@@ -13,7 +13,7 @@ const Profile = ({ user }: { user: User }) => {
             <Image
               className='img-fluid rounded-full'
               src={user?.image || '/images/placeholder.jpg'}
-              alt={user.name || 'Undefined Name'}
+              alt={user?.name || 'Undefined Name'}
               width={256}
               height={256}
             />
@@ -28,23 +28,23 @@ const Profile = ({ user }: { user: User }) => {
 
         <div className='md:w-5/12'>
           <h3 className='mt-7 text-2xl font-bold text-gray-400'>Full Name</h3>
-          <p>{user.name}</p>
+          <p>{user?.name || ''}</p>
 
           <h3 className='mt-7 text-2xl font-bold text-gray-400'>
             Email Address
           </h3>
-          <p>{user.email}</p>
+          <p>{user?.email || ''}</p>
 
           <h3 className='mt-7 text-2xl font-bold text-gray-400'>
             Phone Number
           </h3>
-          <p>{user.phone}</p>
+          <p>{user?.phone || ''}</p>
 
           <h3 className='mt-7 text-2xl font-bold text-gray-400'>Role</h3>
-          <p>{user.role}</p>
+          <p>{user?.role || ''}</p>
 
           <h3 className='mt-7 text-2xl font-bold text-gray-400'>Joined On</h3>
-          <p>{String(user.created_at.toUTCString()).substring(0, 16)}</p>
+          <p>{String(user?.created_at.toUTCString() || '').substring(0, 16)}</p>
 
           <Link
             href={PATH_CART}

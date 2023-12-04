@@ -20,12 +20,14 @@ const CartItems = ({ quantity, item }: { quantity: number; item: Product }) => {
       className='flex w-full gap-x-4 border-b border-gray-200 
         py-2 font-light text-gray-500 lg:px-6'
     >
-      <div className='m-h-[150px] flex w-full items-center gap-x-4 py-2'>
-        <Link href={`/products/${id}`}>
+      <div className='flex w-full items-center gap-x-4 py-2'>
+        <Link
+          href={`/products/${id}`}
+          className='relative min-h-[70px] min-w-[55px]'
+        >
           <Image
-            className='max-w-[80px]'
-            width={80}
-            height={80}
+            className='max-h-[80px] max-w-[80px]'
+            fill
             src={picture[0]}
             alt={productName}
           />

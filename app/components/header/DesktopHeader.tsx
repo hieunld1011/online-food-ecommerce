@@ -18,10 +18,11 @@ import { useAppSelector } from '@/app/stores/store';
 import { totalCartItemSelector } from '@/app/stores/cartSlices';
 import Sidebar from './Sidebar';
 import DropdownUser from './DropdownUser';
+import { useSidebarContext } from '@/app/context/BarContext';
 
 const DesktopHeader = ({ user }: { user: User }) => {
   const [isNavFixed, setIsNavFixed] = useState<boolean>(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebarContext();
   const quantity = useAppSelector((state) => totalCartItemSelector(state));
 
   const pathname = usePathname();
@@ -99,10 +100,7 @@ const DesktopHeader = ({ user }: { user: User }) => {
             </div>
           </div>
         </div>
-        <Sidebar
-          setIsSidebarOpen={setIsSidebarOpen}
-          isSidebarOpen={isSidebarOpen}
-        />
+        <Sidebar />
       </div>
     </div>
   );

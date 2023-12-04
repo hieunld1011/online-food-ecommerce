@@ -48,6 +48,7 @@ const AuthForm = ({ toggleVariant, setToggleVariant }: AuthFormProps) => {
         }
 
         if (callback?.ok && !callback.error) {
+          router.refresh();
           toast.success('Logged In!');
           router.push(PATH_HOME);
         }

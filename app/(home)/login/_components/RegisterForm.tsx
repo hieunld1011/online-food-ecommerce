@@ -43,7 +43,10 @@ const RegisterForm = ({
     try {
       axios
         .post('/api/register', data)
-        .then(() => router.push('/login'))
+        .then(() => {
+          setToggleVariant('LOGIN');
+          toast.success('Register successful, login to continue!');
+        })
         .catch(() => toast.error('Something went wrong!'));
     } catch (error) {
       toast.error('Register: ' + error);

@@ -10,7 +10,7 @@ export const POST = async (req: Request) => {
 
     if (!name || !phone || !password || !email) {
       return new NextResponse('Missing info, please fill all the input', {
-        status: 401,
+        status: 400,
       });
     }
 
@@ -19,7 +19,6 @@ export const POST = async (req: Request) => {
     const user = await prisma.user.create({
       data: {
         email: email,
-        emailVerified: email,
         phone: phone,
         password: hashedPassword,
         name: name,

@@ -1,8 +1,8 @@
 'use client';
 
-import { Input } from '@/app/components/Input';
+import { Input } from '@/app/components/Input/InputHookForm';
+import handleAxiosError from '@/app/utils/axiosError';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -20,7 +20,6 @@ const RegisterForm = ({
   const regExpNumber = new RegExp(
     /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g
   );
-  const router = useRouter();
 
   const {
     register,
@@ -40,17 +39,15 @@ const RegisterForm = ({
   };
 
   const onSubmitHandler: SubmitHandler<FieldValues> = (data) => {
-    try {
-      axios
-        .post('/api/register', data)
-        .then(() => {
+    axios
+      .post('/api/register', data)
+      .then((res) => {
+        if (res.status === 200) {
           setToggleVariant('LOGIN');
           toast.success('Register successful, login to continue!');
-        })
-        .catch(() => toast.error('Something went wrong!'));
-    } catch (error) {
-      toast.error('Register: ' + error);
-    }
+        }
+      })
+      .catch((err) => handleAxiosError(err));
   };
 
   return (

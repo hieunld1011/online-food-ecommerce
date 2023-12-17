@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { PATH_CART } from '@/app/routes/router.path';
 import { useRef, useEffect } from 'react';
 import clsx from 'clsx';
-import CartItems from '../CartItems';
+import CartItems from '../CartItems/CartItems';
 import {
   clearCart,
   totalCartItemSelector,

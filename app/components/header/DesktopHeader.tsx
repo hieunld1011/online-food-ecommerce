@@ -54,7 +54,7 @@ const DesktopHeader = ({ user }: { user: User }) => {
         <div className='-mx-4 flex items-center'>
           <div className='flex-[0_0_25%] px-4'>
             <Link href={PATH_HOME}>
-              <Image src={Logo} alt='logo' />
+              <Image src={Logo} alt='logo' priority={true} />
             </Link>
           </div>
           <div className='flex flex-[0_0_75%] items-center px-4 text-right'>

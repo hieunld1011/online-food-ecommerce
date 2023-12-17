@@ -9,7 +9,7 @@ export const POST = async (req: Request) => {
     const { name, phone, password, email } = body;
 
     if (!name || !phone || !password || !email) {
-      return new NextResponse('Missing info, please fill all the input', {
+      return NextResponse.json({error:'Missing info, please fill all the input'}, {
         status: 400,
       });
     }
@@ -27,6 +27,6 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(user);
   } catch (error) {
-    return new NextResponse('Internal Error: ' + error, { status: 500 });
+    return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
   }
 };

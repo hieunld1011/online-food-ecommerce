@@ -15,7 +15,7 @@ export async function DELETE(req:Request,{params}:{params:IParams}){
           });
       
           if(!orders){
-              return new NextResponse("Can't get order", {
+              return NextResponse.json({error:"Can't get order"}, {
                   status: 402,
               });
           }
@@ -28,7 +28,7 @@ export async function DELETE(req:Request,{params}:{params:IParams}){
       
           return NextResponse.json({status:200})
     } catch (error) {
-      return new NextResponse('Internal Error: ' + error, { status: 500 });
+      return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }
 
@@ -46,7 +46,7 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
       })
   
       if(!isOrderExist){
-        return new NextResponse("Order not found", {
+        return NextResponse.json({error:"Order not found"}, {
             status: 402,
         });
       }
@@ -65,6 +65,6 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
       return NextResponse.json(orderUpdated,{status:200})
   
     } catch (error) {
-      return new NextResponse('Internal Error: ' + error, { status: 500 });
+      return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
   }

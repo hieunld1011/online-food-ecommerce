@@ -1,6 +1,4 @@
-import { Product, Review, User } from "@prisma/client";
-
-
+import { Product } from "@prisma/client";
 
 interface ProductDetailsType extends Product  {
     reviews: {

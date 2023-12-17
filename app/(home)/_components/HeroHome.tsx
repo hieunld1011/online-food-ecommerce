@@ -1,6 +1,6 @@
 import { PATH_CONTACT, PATH_SHOP } from '@/app/routes/router.path';
 import Image from 'next/image';
-import Link from '../../components/Link';
+import Link from '../../components/Link/Link';
 
 import heroImg1 from '../../assets/home/hero_img.png';
 import backdrop from '../../assets/home/backdrop_img.png';

@@ -1,4 +1,4 @@
-import HeroSection from '@/app/components/HeroSection';
+import HeroSection from '@/app/components/Hero&Title/HeroSection';
 import ServiceAbout from './_components/ServiceAbout';
 import TestimonialHome from '../_components/TestimonialHome';
 import DeliveryHome from '../_components/DeliveryHome';

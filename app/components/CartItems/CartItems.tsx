@@ -2,12 +2,12 @@ import { Product } from '@prisma/client';
 import Link from 'next/link';
 import { IoMdAdd, IoMdRemove, IoMdClose } from 'react-icons/io';
 
-import { useAppDispatch } from '../stores/store';
+import { useAppDispatch } from '../../stores/store';
 import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
-} from '../stores/cartSlices';
+} from '../../stores/cartSlices';
 import Image from 'next/image';
 
 const CartItems = ({ quantity, item }: { quantity: number; item: Product }) => {

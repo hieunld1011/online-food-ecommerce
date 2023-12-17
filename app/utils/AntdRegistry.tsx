@@ -1,13 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo, useRef } from 'react';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import type Entity from '@ant-design/cssinjs/es/Cache';
 import { useServerInsertedHTML } from 'next/navigation';
 
 const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
-  const cache = React.useMemo<Entity>(() => createCache(), []);
-  const isServerInserted = React.useRef<boolean>(false);
+  const cache = useMemo<Entity>(() => createCache(), []);
+  const isServerInserted = useRef<boolean>(false);
   useServerInsertedHTML(() => {
     // avoid duplicate css insert
     if (isServerInserted.current) {

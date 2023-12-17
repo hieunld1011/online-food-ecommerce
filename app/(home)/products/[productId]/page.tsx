@@ -1,4 +1,4 @@
-import HeroSection from '@/app/components/HeroSection';
+import HeroSection from '@/app/components/Hero&Title/HeroSection';
 import ProductDetailContainer from './_components/ProductDetailContainer';
 import getUser from '@/app/actions/getUser';
 import ProductRecommend from './_components/ProductRecommend';

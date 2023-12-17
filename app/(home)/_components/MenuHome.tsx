@@ -1,8 +1,9 @@
 'use client';
 
-import SectionTitile from '@/app/components/SectionTitile';
+import SectionTitile from '@/app/components/Hero&Title/SectionTitile';
 import { menuListButton } from '@/app/constants/home.constants';
 import { PATH_HOME } from '@/app/routes/router.path';
+import handleAxiosError from '@/app/utils/axiosError';
 import axios from 'axios';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -28,8 +29,13 @@ const MenuHome = () => {
     firstIndex = lastIndex - productPerPage;
 
   const getProducts = async () => {
-    const { data } = await axios.get('/api/products');
-    setProducts(data.menu);
+    await axios
+      .get('/api/products')
+      .then((res) => {
+        const { data } = res;
+        setProducts(data.menu);
+      })
+      .catch((err) => handleAxiosError(err));
   };
 
   useEffect(() => {

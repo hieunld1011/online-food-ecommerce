@@ -1,6 +1,6 @@
-import SectionTitile from '@/app/components/SectionTitile';
+import SectionTitile from '@/app/components/Hero&Title/SectionTitile';
 import { PATH_SHOP } from '@/app/routes/router.path';
-import Link from '@/app/components/Link';
+import Link from '@/app/components/Link/Link';
 
 const OfferHome = () => {
   return (
@@ -8,7 +8,7 @@ const OfferHome = () => {
       <div className='container mx-auto overflow-hidden px-4'>
         <SectionTitile
           section='Our Offer'
-          title='Ake a look at our special menu offers'
+          title='Take a look at our special menu offers'
           desc={`We pride ourselves on sourcing incredible ingredients from ranchers, farmers, bakers, and food purveyors who all share our values.`}
         />
         <div className='-mx-4 flex flex-col flex-wrap md:flex-row'>

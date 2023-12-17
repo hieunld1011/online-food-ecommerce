@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   });
 
     if(!menu){
-        return new NextResponse("Can't get product", {
+        return NextResponse.json({error:"Can't get product"}, {
             status: 402,
         });
     }
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     return NextResponse.json({menu},{status:200})
     
   } catch (error) {
-    return new NextResponse('Internal Error: ' + error, { status: 500 });
+    return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
   }
 }
 
@@ -37,7 +37,7 @@ export async function POST(req:Request){
     })
 
     if(isProductExist){
-      return new NextResponse("Product already exists", {
+      return NextResponse.json({error:"Product already exists"}, {
           status: 402,
       });
     }
@@ -57,6 +57,6 @@ export async function POST(req:Request){
     return NextResponse.json(productUpdated,{status:200})
 
   } catch (error) {
-    return new NextResponse('Internal Error: ' + error, { status: 500 });
+    return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
   }
 }

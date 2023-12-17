@@ -1,4 +1,4 @@
-import HeroSection from '@/app/components/HeroSection';
+import HeroSection from '@/app/components/Hero&Title/HeroSection';
 import React from 'react';
 import MapContact from './_components/MapContact';
 import ContactInfo from './_components/ContactInfo';

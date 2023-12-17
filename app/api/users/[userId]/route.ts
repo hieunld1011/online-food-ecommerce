@@ -15,7 +15,7 @@ export async function DELETE(req:Request,{params}:{params:IParams}){
           });
       
           if(!users){
-              return new NextResponse("Can't get user", {
+              return NextResponse.json({error:"Can't get user"}, {
                   status: 402,
               });
           }
@@ -28,7 +28,7 @@ export async function DELETE(req:Request,{params}:{params:IParams}){
       
           return NextResponse.json({status:200})
     } catch (error) {
-      return new NextResponse('Internal Error: ' + error, { status: 500 });
+      return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }
 
@@ -46,7 +46,7 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
       })
   
       if(!isUserExist){
-        return new NextResponse("User not found", {
+        return NextResponse.json({error:"User not found"}, {
             status: 402,
         });
       }
@@ -65,6 +65,6 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
       return NextResponse.json(userUpdated,{status:200})
   
     } catch (error) {
-      return new NextResponse('Internal Error: ' + error, { status: 500 });
+      return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
   }

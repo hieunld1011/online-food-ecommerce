@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { mediaLinks } from '../../constants/home.constants';
 import FooterLogo from '../../assets/home/footer-logo.png';
@@ -11,15 +10,8 @@ import thumb2 from '../../assets/home/footer-thumb-2.png';
 import clsx from 'clsx';
 
 const Footer = () => {
-  const pathname = usePathname();
-
   return (
-    <div
-      className={clsx(
-        `bg-[#1a1a1b] pb-1 pt-24`,
-        pathname === '/login' && 'hidden'
-      )}
-    >
+    <div className={clsx(`bg-[#1a1a1b] pb-1 pt-24`)}>
       <div className='container mx-auto px-4'>
         <div className='grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4'>
           <div className='flex flex-col'>

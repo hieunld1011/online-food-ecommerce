@@ -9,6 +9,8 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import clsx from 'clsx';
+import handleAxiosError from '@/app/utils/axiosError';
+import { toast } from 'react-toastify';
 
 interface DataType {
   key: React.Key;
@@ -20,6 +22,17 @@ interface DataType {
   numOfReviews: number;
   createdAt: Date;
 }
+
+const DataTypeInit = {
+  key: '',
+  name: '',
+  email: '',
+  phone: '',
+  role: '',
+  numOfOrders: 0,
+  numOfReviews: 0,
+  createdAt: new Date(Date.now()),
+};
 
 const userData = [
   {
@@ -40,25 +53,41 @@ const DashboardUsers = () => {
   const rows: DataType[] = [];
   const [users, setUsers] = useState<UsersProps[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editingUsers, setEditingUsers] = useState<DataType>();
+  const [editingUsers, setEditingUsers] = useState<DataType>(DataTypeInit);
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get('/api/users');
-    setUsers(
-      data.sort(
-        (a: UsersProps, b: UsersProps) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      )
-    );
+    await axios
+      .get('/api/users')
+      .then((res) => {
+        const { data } = res;
+        setUsers(
+          data.sort(
+            (a: UsersProps, b: UsersProps) =>
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+          )
+        );
+      })
+      .catch((error) => handleAxiosError(error));
   }, []);
 
   const editData = async (record: DataType) => {
-    await axios.patch(`/api/users/${record.key}`, editingUsers);
+    await axios
+      .patch(`/api/users/${record.key}`, record)
+      .then((res) => {
+        if (res.status === 200) toast.success('User updated successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 
-  const deleteData = async (record: any) => {
-    await axios.delete(`/api/users/${record.key}`);
+  const deleteData = async (record: DataType) => {
+    await axios
+      .delete(`/api/users/${record.key}`)
+      .then((res) => {
+        if (res.status === 200) toast.success('User deleted successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 
@@ -83,7 +112,7 @@ const DashboardUsers = () => {
 
   const resetEditing = () => {
     setIsEditing(false);
-    setEditingUsers(undefined);
+    setEditingUsers(DataTypeInit);
   };
 
   const handleEditClick = (record: DataType) => {
@@ -94,18 +123,15 @@ const DashboardUsers = () => {
   const handleDeleteClick = (record: DataType) => {
     Modal.confirm({
       title: `Are you sure ${
-        record.role === 'invalid' ? 'DELETING' : 'INVALID'
-      } this order?`,
+        record.role === 'invalid' ? 'DELETE' : 'INVALID'
+      } this user?`,
       okText: 'Yes',
       okType: 'danger',
-      onOk: () => {
+      onOk: async () => {
         if (record.role === 'invalid') {
-          return deleteData(record);
+          return await deleteData(record);
         }
-        setEditingUsers(() => {
-          return { ...record, role: 'invalid' };
-        });
-        editData(editingUsers!);
+        await editData({ ...record, role: 'invalid' });
       },
     });
   };
@@ -178,7 +204,7 @@ const DashboardUsers = () => {
       key: 'operation',
       align: 'center',
       fixed: 'right',
-      render: (record) => (
+      render: (record: DataType) => (
         <>
           <EditIcon
             className='cursor-pointer text-blue-500 hover:opacity-70'
@@ -206,8 +232,8 @@ const DashboardUsers = () => {
         open={isEditing}
         okText='Save'
         onCancel={() => resetEditing()}
-        onOk={() => {
-          editData(editingUsers!);
+        onOk={async () => {
+          await editData(editingUsers);
           resetEditing();
         }}
       >

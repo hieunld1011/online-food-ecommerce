@@ -17,6 +17,8 @@ import { addToCart } from '@/app/stores/cartSlices';
 import { PATH_LOGIN } from '@/app/routes/router.path';
 import { Rating } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import handleAxiosError from '@/app/utils/axiosError';
 
 interface IParams {
   productId: string;
@@ -82,15 +84,25 @@ const ProductDetailContainer = ({
   });
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get(`/api/products/${params.productId}`);
-    setProductDetail(data);
+    await axios
+      .get(`/api/products/${params.productId}`)
+      .then((res) => {
+        const { data } = res;
+        setProductDetail(data);
+      })
+      .catch((err) => handleAxiosError(err));
   }, [params.productId]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    await axios.post('/api/review', {
-      ...data,
-      productId: productDetail.id,
-    });
+    await axios
+      .post('/api/review', {
+        ...data,
+        productId: productDetail.id,
+      })
+      .then((res) => {
+        if (res.status === 200) toast.success('User updated successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     setValue('rating', 0);
     setValue('comment', '');
     setRating(0);

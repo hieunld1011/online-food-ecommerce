@@ -11,7 +11,7 @@ export async function GET(req: Request) {
       });
   
       if(!users){
-          return new NextResponse("Can't get users", {
+          return NextResponse.json({error:"Can't get users"}, {
               status: 402,
           });
       }
@@ -19,6 +19,6 @@ export async function GET(req: Request) {
       return NextResponse.json(users,{status:200})
       
     } catch (error) {
-      return new NextResponse('Internal Error: ' + error, { status: 500 });
+      return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }

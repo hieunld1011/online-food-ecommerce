@@ -1,4 +1,4 @@
-import SectionTitile from '@/app/components/SectionTitile';
+import SectionTitile from '@/app/components/Hero&Title/SectionTitile';
 import { featureOffers } from '@/app/constants/home.constants';
 import Image from 'next/image';
 
@@ -7,7 +7,7 @@ const FeatureHome = () => {
     <div className='pb-28 pt-24'>
       <div className='container mx-auto px-4'>
         <SectionTitile
-          title='Ake a look at our special menu offers'
+          title='Take a look at our special menu offers'
           desc={`We pride ourselves on sourcing incredible ingredients from ranchers,
           farmers, bakers, and food purveyors who all share our values.`}
           section='Our Offer'

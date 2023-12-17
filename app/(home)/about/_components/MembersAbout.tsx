@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
-import SectionTitle from '@/app/components/SectionTitile';
+import SectionTitle from '@/app/components/Hero&Title/SectionTitile';
 
 import staff1 from '../../../assets/about/team-img.jpg';
 import staff2 from '../../../assets/about/team-thumb-2.jpg';

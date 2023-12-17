@@ -16,7 +16,7 @@ export const POST = async (req:Request)=>{
             }
         })
         
-        if(isUserReview)return new NextResponse("You have already post a review", {
+        if(isUserReview)return NextResponse.json({error:"You have already post a review"}, {
             status: 403,
         });
 
@@ -57,6 +57,6 @@ export const POST = async (req:Request)=>{
         return NextResponse.json(newReview)
         
     } catch (error) {
-        return new NextResponse('Internal Error: ' + error, { status: 500 });
+        return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }

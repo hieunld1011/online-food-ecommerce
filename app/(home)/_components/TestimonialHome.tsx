@@ -1,4 +1,4 @@
-import SectionTitle from '@/app/components/SectionTitile';
+import SectionTitle from '@/app/components/Hero&Title/SectionTitile';
 import Image from 'next/image';
 import { FaQuoteRight } from 'react-icons/fa';
 import { IoMdStar, IoMdStarOutline } from 'react-icons/io';

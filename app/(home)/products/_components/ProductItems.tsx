@@ -12,6 +12,7 @@ import { IoCart } from 'react-icons/io5';
 import { useAppDispatch } from '@/app/stores/store';
 import { incrementQuantity } from '@/app/stores/cartSlices';
 import clsx from 'clsx';
+import handleAxiosError from '@/app/utils/axiosError';
 
 const initialProduct = {
   id: '',
@@ -40,9 +41,14 @@ const ProductItems = () => {
     firstIndex = lastIndex - productPerPage;
 
   const getProducts = async () => {
-    const { data } = await axios.get('/api/products');
-    setProducts(data.menu);
-    setFilteredProducts(data.menu);
+    await axios
+      .get('/api/products')
+      .then((res) => {
+        const { data } = res;
+        setProducts(data.menu);
+        setFilteredProducts(data.menu);
+      })
+      .catch((err) => handleAxiosError(err));
   };
 
   useEffect(() => {

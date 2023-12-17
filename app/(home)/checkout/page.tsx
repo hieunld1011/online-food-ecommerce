@@ -1,4 +1,4 @@
-import HeroSection from '@/app/components/HeroSection';
+import HeroSection from '@/app/components/Hero&Title/HeroSection';
 import CheckoutForm from './_components/CheckoutForm';
 import getUser from '@/app/actions/getUser';
 

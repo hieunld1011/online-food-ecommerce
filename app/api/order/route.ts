@@ -8,7 +8,7 @@ export const POST = async (req:Request)=>{
         const {notes,receivedPhone,address,quantity,productIds,userId,total}=body
 
         if(!quantity){
-            return new NextResponse("Product cant be under 0",{status:400})
+            return NextResponse.json({error:"Product cant be under 0"},{status:400})
         }
 
         const newOrder = await prisma.order.create({
@@ -42,7 +42,7 @@ export const POST = async (req:Request)=>{
         return NextResponse.json(newOrder)
         
     } catch (error) {
-        return new NextResponse('Internal Error: ' + error, { status: 500 });
+        return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }
 
@@ -57,6 +57,6 @@ export const GET = async(req:Request)=>{
         return NextResponse.json(orders,{status:200})
         
     } catch (error) {
-        return new NextResponse('Internal Error: ' + error, { status: 500 });
+        return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }

@@ -6,8 +6,8 @@ import Link from 'next/link';
 const Profile = ({ user }: { user: User }) => {
   return (
     <div className='mx-auto max-w-screen-md md:max-w-screen-lg'>
-      <h2 className='ml-12 mt-16 text-4xl font-semibold'>My Profile</h2>
-      <div className='mx-3 my-16 flex flex-col justify-around md:-mx-3 md:flex-row'>
+      <h2 className='ml-12 mt-6 text-4xl font-semibold'>My Profile</h2>
+      <div className='mx-3 my-9 flex flex-col justify-around md:-mx-3 md:flex-row'>
         <div className='md:w-3/12'>
           <figure className='avatar avatar-profile'>
             <Image

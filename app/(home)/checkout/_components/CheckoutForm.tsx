@@ -7,11 +7,11 @@ import {
   totalPriceSelector,
 } from '@/app/stores/cartSlices';
 import { useAppDispatch, useAppSelector } from '@/app/stores/store';
+import handleAxiosError from '@/app/utils/axiosError';
 import { User } from '@prisma/client';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 const CheckoutForm = ({ user }: { user: User }) => {
   const cart = useAppSelector((state) => state.cart);
@@ -32,21 +32,21 @@ const CheckoutForm = ({ user }: { user: User }) => {
   } = useForm<FieldValues>();
 
   const onSubmitHandler: SubmitHandler<FieldValues> = (data) => {
-    try {
-      axios
-        .post('/api/order', {
-          ...data,
-          quantity: quantity,
-          userId: user.id,
-          productIds: listProducts,
-          total: parseFloat((total + 10).toFixed(2)),
-        })
-        .then(() => router.push(PATH_SHOP))
-        .then(() => dispatch(clearCart()))
-        .catch(() => toast.error('Cant order products'));
-    } catch (error) {
-      toast.error('Register: ' + error);
-    }
+    axios
+      .post('/api/order', {
+        ...data,
+        quantity: quantity,
+        userId: user.id,
+        productIds: listProducts,
+        total: parseFloat((total + 10).toFixed(2)),
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          router.push(PATH_SHOP);
+          dispatch(clearCart());
+        }
+      })
+      .catch((err) => handleAxiosError(err));
   };
 
   return (

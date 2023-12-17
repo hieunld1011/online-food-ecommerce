@@ -16,7 +16,7 @@ export async function DELETE(request:Request,{params}:{params:IParams}){
       })
   
       if(!isProductExist){
-        return new NextResponse("Product not found", {
+        return NextResponse.json({error:"Product not found"}, {
             status: 402,
         });
       }
@@ -30,7 +30,7 @@ export async function DELETE(request:Request,{params}:{params:IParams}){
       return NextResponse.json({status:200})
   
     } catch (error) {
-      return new NextResponse('Internal Error: ' + error, { status: 500 });
+      return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }
 
@@ -56,7 +56,7 @@ export async function GET(request:Request,{params}:{params:IParams}){
         })
     
         if(!isProductExist){
-          return new NextResponse("Product not found", {
+          return NextResponse.json({error:"Product not found"}, {
               status: 402,
           });
         }
@@ -64,7 +64,7 @@ export async function GET(request:Request,{params}:{params:IParams}){
         return NextResponse.json(isProductExist,{status:200})
     
       } catch (error) {
-        return new NextResponse('Internal Error: ' + error, { status: 500 });
+        return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
     }
 }
 
@@ -82,7 +82,7 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
     })
 
     if(!isProductExist){
-      return new NextResponse("Product not found", {
+      return NextResponse.json({error:"Product not found"}, {
           status: 402,
       });
     }
@@ -101,6 +101,6 @@ export async function PATCH(req:Request,{params}:{params:IParams}){
     return NextResponse.json(productUpdated,{status:200})
 
   } catch (error) {
-    return new NextResponse('Internal Error: ' + error, { status: 500 });
+    return NextResponse.json({error:'Internal Error: ' + error}, { status: 500 });
   }
 }

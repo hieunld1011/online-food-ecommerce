@@ -1,4 +1,4 @@
-import HeroSection from '@/app/components/HeroSection';
+import HeroSection from '@/app/components/Hero&Title/HeroSection';
 import CartLists from './_components/CartLists';
 
 const Cart = () => {

@@ -10,6 +10,8 @@ import { useCallback, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import clsx from 'clsx';
+import handleAxiosError from '@/app/utils/axiosError';
+import { toast } from 'react-toastify';
 
 interface DataType {
   key: React.Key;
@@ -21,6 +23,17 @@ interface DataType {
   delivered: Date | null;
   createdAt: Date;
 }
+
+const DataTypeInit = {
+  key: '',
+  name: '',
+  notes: '',
+  phone: '',
+  status: '',
+  total: 0,
+  delivered: new Date(Date.now()),
+  createdAt: new Date(Date.now()),
+};
 
 const statusData = [
   {
@@ -41,25 +54,41 @@ const DashboardOrders = () => {
   const rows: DataType[] = [];
   const [orders, setOrders] = useState<OrdersProps[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editingOrder, setEditingProduct] = useState<DataType>();
+  const [editingOrder, setEditingProduct] = useState<DataType>(DataTypeInit);
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get('/api/order');
-    setOrders(
-      data.sort(
-        (a: OrdersProps, b: OrdersProps) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      )
-    );
+    await axios
+      .get('/api/order')
+      .then((res) => {
+        const { data } = res;
+        setOrders(
+          data.sort(
+            (a: OrdersProps, b: OrdersProps) =>
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+          )
+        );
+      })
+      .catch((err) => handleAxiosError(err));
   }, []);
 
   const deleteData = async (record: any) => {
-    await axios.delete(`/api/order/${record.key}`);
+    await axios
+      .delete(`/api/order/${record.key}`)
+      .then((res) => {
+        if (res.status === 200) toast.success('Order deleted successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 
   const editData = async (record: DataType) => {
-    await axios.patch(`/api/order/${record.key}`, editingOrder);
+    await axios
+      .patch(`/api/order/${record.key}`, record)
+      .then((res) => {
+        if (res.status === 200) toast.success('Order updated successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 
@@ -85,7 +114,7 @@ const DashboardOrders = () => {
 
   const resetEditing = () => {
     setIsEditing(false);
-    setEditingProduct(undefined);
+    setEditingProduct(DataTypeInit);
   };
 
   const handleEditClick = (record: DataType) => {
@@ -104,10 +133,7 @@ const DashboardOrders = () => {
         if (record.status === 'invalid') {
           return deleteData(record);
         }
-        setEditingProduct(() => {
-          return { ...record, status: 'invalid' };
-        });
-        editData(editingOrder!);
+        editData({ ...record, status: 'invalid' });
       },
     });
   };
@@ -225,8 +251,8 @@ const DashboardOrders = () => {
         open={isEditing}
         okText='Save'
         onCancel={() => resetEditing()}
-        onOk={() => {
-          editData(editingOrder!);
+        onOk={async () => {
+          await editData(editingOrder);
           resetEditing();
         }}
       >

@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
-import { Input } from '@/app/components/Input';
+import { Input } from '@/app/components/Input/InputHookForm';
 import AuthSocialButton from './AuthSocialButton';
 import { PATH_HOME } from '@/app/routes/router.path';
 

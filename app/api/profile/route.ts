@@ -8,16 +8,16 @@ export async function POST(req:Request){
         const body =await req.json()
         const user = await getUser()
 
-        const {email,password,phone,username,oldPassword}=body
+        const {email,password,phone,username,oldPassword,image}=body
 
         if(!user){
-            return new NextResponse("Can't find current user", { status: 404 });
+            return NextResponse.json({error:"Can't find current user"}, { status: 404 });
         }
 
         const comparePassword = await bcrypt.compare(oldPassword,user.password!)
 
         if(!comparePassword){
-            return new NextResponse("Wrong password",{status:403})
+            return NextResponse.json({error:"Old password has to be matched"},{status:403})
         }
 
         const hashedPassword = await bcrypt.hash(password,12)
@@ -30,11 +30,12 @@ export async function POST(req:Request){
                 name:username,
                 password:hashedPassword,
                 email:email,
-                phone:phone
+                phone:phone,
+                image:image
             }
         })
 
-        return NextResponse.json(updatedUser)
+        return NextResponse.json({updatedUser,msg:'Profile updated successfully'},{status:200})
 
     } catch (error) {
         return new NextResponse('Internal Error: ' + error, { status: 500 });

@@ -12,6 +12,7 @@ import { ProductsProps } from '@/app/types/index.types';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { HiPhotograph } from 'react-icons/hi';
+import handleAxiosError from '@/app/utils/axiosError';
 
 interface DataType {
   key: React.Key;
@@ -48,17 +49,32 @@ const DashboardProducts = () => {
   const [editingProduct, setEditingProduct] = useState<DataType>();
 
   const fetchData = useCallback(async () => {
-    const { data } = await axios.get('/api/products');
-    setProducts(data.menu);
+    await axios
+      .get('/api/products')
+      .then((res) => {
+        const { data } = res;
+        setProducts(data.menu);
+      })
+      .catch((err) => handleAxiosError(err));
   }, []);
 
   const deleteData = async (record: DataType) => {
-    await axios.delete(`/api/products/${record.key}`);
+    await axios
+      .delete(`/api/products/${record.key}`)
+      .then((res) => {
+        if (res.status === 200) toast.success('Product updated successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 
   const editData = async (record: DataType) => {
-    await axios.patch(`/api/products/${record.key}`, editingProduct);
+    await axios
+      .patch(`/api/products/${record.key}`, editingProduct)
+      .then((res) => {
+        if (res.status === 200) toast.success('Product deleted successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 
@@ -74,7 +90,12 @@ const DashboardProducts = () => {
       return;
     }
 
-    await axios.post(`/api/products`, addingProduct);
+    await axios
+      .post(`/api/products`, addingProduct)
+      .then((res) => {
+        if (res.status === 200) toast.success('Product created successfully');
+      })
+      .catch((err) => handleAxiosError(err));
     await fetchData();
   };
 

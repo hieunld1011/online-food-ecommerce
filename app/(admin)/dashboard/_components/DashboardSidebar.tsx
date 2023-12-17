@@ -16,7 +16,7 @@ export default function DashboardSidebar() {
     <div className='flex w-60 flex-col bg-neutral-900 p-3'>
       <div className='flex items-center gap-2 px-1 py-3'>
         <Link href={PATH_HOME}>
-          <Image src={Logo} alt='Logo' />
+          <Image src={Logo} alt='Logo' priority={true} />
         </Link>
       </div>
       <div className='flex flex-1 flex-col gap-0.5 py-8'>

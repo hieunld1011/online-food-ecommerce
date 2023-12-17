@@ -13,7 +13,7 @@ const Header = ({ user, children }: HeaderProps) => {
     <div className='min-h-screen'>
       <DesktopHeader user={user!} />
       <MobileHeader user={user!} />
-      <main className='-z-10'>{children}</main>
+      <main>{children}</main>
     </div>
   );
 };

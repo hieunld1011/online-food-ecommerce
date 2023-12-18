@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../components/Header/Header';
+import Header from '../components/header/Header';
 
 import getUser from '../actions/getUser';
-import Footer from '../components/Footer/Footer';
+import Footer from '../components/footer/Footer';
 import {
   PATH_LOGIN,
   PATH_PROFILE,
